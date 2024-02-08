@@ -1,91 +1,116 @@
 class Note {
-  public readonly id: string;
-  private text: string;
+  private static count = 0
+  public readonly id: number
+  public text: string
 
   constructor(text: string) {
-    this.id = new Date().toISOString();
-    this.text = text;
-  }
+    this.id = Note.count
+    this.text = text
 
-  public show(): void {
-    console.log(this.text);
-  }
-
-  public edit(newText: string): void {
-    this.text = newText;
+    Note.count += 1
   }
 }
 
 class Setting {
-  private password: string;
-  private theme: "LIGHT" | "DARK";
-  private fontSize: number;
+  private password: string | null
+  private theme: 'LIGHT' | 'DARK'
+  private fontSize: number
 
   constructor() {
-    this.password = null;
-    this.theme = "LIGHT";
-    this.fontSize = 14;
+    this.password = null
+    this.theme = 'LIGHT'
+    this.fontSize = 14
   }
 
   private validatePassword(password: string): boolean {
     if (password.length < 8) {
-      return false;
+      return false
     } else if (password.length > 32) {
-      return false;
+      return false
     } else {
-      return true;
+      return true
     }
   }
 
   public changePassword(newPassword: string): void {
     if (this.validatePassword(newPassword)) {
-      this.password = newPassword;
+      this.password = newPassword
     }
   }
 
   public toggleTheme(): void {
-    if (this.theme === "LIGHT") {
-      this.theme = "DARK";
+    if (this.theme === 'LIGHT') {
+      this.theme = 'DARK'
     } else {
-      this.theme = "LIGHT";
+      this.theme = 'LIGHT'
     }
   }
 
   public changeFontSize(newFontSize: number): void {
     if (newFontSize < 8) {
-      this.fontSize = 8;
+      this.fontSize = 8
     } else if (newFontSize > 60) {
-      this.fontSize = 60;
+      this.fontSize = 60
     } else {
-      this.fontSize = Math.floor(newFontSize);
+      this.fontSize = Math.floor(newFontSize)
     }
   }
 }
 
 class Notebook {
-  public readonly notes: Note[];
-  public readonly setting: Setting;
+  public notes: Note[]
+  public readonly setting: Setting
 
   constructor() {
-    this.notes = [];
-    this.setting = new Setting();
+    this.notes = []
+    this.setting = new Setting()
   }
 
-  public getNoteById(noteId: string): Note | undefined {
-    return this.notes.find(({ id }) => id === noteId);
+  public getNoteById(noteId: number): Note | undefined {
+    return this.notes.find(({ id }) => id === noteId)
   }
 
   public createNewNote(newNote: Note): void {
-    this.notes.push(newNote);
+    this.notes.push(newNote)
   }
 
   public deleteAllNotes(): void {
-    this.notes.length = 0;
+    this.notes.length = 0
   }
 
-  public deleteNote(noteId: string): void {
-    const targetNote = this.getNoteById(noteId);
-    const targetNoteIndex = this.notes.indexOf(targetNote);
-    this.notes.splice(targetNoteIndex, 1);
+  public deleteNote(noteId: number): void {
+    const targetNote = this.getNoteById(noteId)
+
+    if (targetNote) {
+      const targetNoteIndex = this.notes.indexOf(targetNote)
+      this.notes.splice(targetNoteIndex, 1)
+    }
+  }
+
+  public editNote(noteId: number, newText: string): void {
+    const updatedNotes = this.notes.map<Note>(note =>
+      note.id == noteId
+        ? {
+            id: noteId,
+            text: newText,
+          }
+        : note
+    )
+
+    this.notes = updatedNotes
+  }
+
+  public printAllNotes() {
+    this.notes.forEach(note => console.log(note))
   }
 }
+
+const notebook = new Notebook()
+notebook.createNewNote(new Note('one'))
+notebook.printAllNotes()
+
+notebook.editNote(0, 'one 1')
+notebook.printAllNotes()
+
+notebook.createNewNote(new Note('two'))
+notebook.printAllNotes()
