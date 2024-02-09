@@ -109,6 +109,7 @@ class Notebook {
 
   public printAllNotes() {
     this.notes.forEach(note => console.log(note))
+    console.log('-----')
   }
 }
 

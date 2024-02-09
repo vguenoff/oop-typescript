@@ -1,47 +1,51 @@
+// 2. Open/Closed (OCP)
+// Software entities should be open for extension, but closed for modification.
+// ! Uses implement
+
 interface OperatingSystemInfo {
-  getFilesExtension: () => string;
-  getCreator: () => string;
-  getBornDate: () => number;
+  getFilesExtension: () => string
+  getCreator: () => string
+  getBornDate: () => number
 }
 
 class Windows implements OperatingSystemInfo {
   getFilesExtension() {
-    return "exe";
+    return 'exe'
   }
 
   getCreator() {
-    return "Bill Gates";
+    return 'Bill Gates'
   }
 
   getBornDate() {
-    return 1985;
-  };
+    return 1985
+  }
 }
 
 class Linux implements OperatingSystemInfo {
   getFilesExtension() {
-    return "deb";
+    return 'deb'
   }
 
   getCreator() {
-    return "Linus Torvalds";
+    return 'Linus Torvalds'
   }
 
   getBornDate() {
-    return 1991;
-  };
+    return 1991
+  }
 }
 
 class Macintosh implements OperatingSystemInfo {
   getFilesExtension() {
-    return "dmg";
+    return 'dmg'
   }
 
   getCreator() {
-    return "Steve Jobs";
+    return 'Steve Jobs'
   }
 
   getBornDate() {
-    return 1984;
-  };
+    return 1984
+  }
 }
