@@ -1,6 +1,7 @@
 // 2. Open/Closed (OCP)
+
 // Software entities should be open for extension, but closed for modification.
-// ! Uses implement
+// ! Use implement to assure certain behavior
 
 interface OperatingSystemInfo {
   getFilesExtension: () => string
